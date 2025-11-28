@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>South Africa Hotel Rooms</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background: #f4f4f7;
+        }
+
+        header {
+            background: #004b6f;
+            padding: 22px;
+            color: white;
+            text-align: center;
+        }
+
+        .container {
+            padding: 20px;
+        }
+
+        .hotel-card {
+            background: white;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            overflow: hidden;
+            box-shadow: 0px 3px 10px rgba(0,0,0,0.1);
+        }
+
+        .hotel-card img {
+            width: 100%;
+            height: 210px;
+            object-fit: cover;
+        }
+
+        .hotel-card .info {
+            padding: 15px;
+        }
+
+        .hotel-card h3 {
+            margin: 0;
+            font-size: 20px;
+            color: #004b6f;
+        }
+
+        .hotel-card p {
+            margin: 5px 0;
+            color: #555;
+        }
+
+        .btn {
+            padding: 10px 16px;
+            background: #004b6f;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        /* Detail panel */
+        #detailPanel {
+            display: none;
+            background: white;
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .gallery img {
+            width: 32%;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-right: 2%;
+        }
+
+        .amenities span {
+            display: inline-block;
+            background: #dceeff;
+            color: #004b6f;
+            padding: 6px 10px;
+            border-radius: 6px;
+            margin: 4px;
+            font-size: 12px;
+        }
+
+        .close-btn {
+            background: #ccc;
+            color: black;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>South Africa – Hotel Rooms</h1>
+    <p>Travel & Tourism App UI</p>
+</header>
+
+<div class="container">
+
+    <!-- HOTEL CARDS -->
+    <div class="hotel-card">
+        <img src="https://picsum.photos/id/1015/800/500" alt="Cape Town Hotel">
+        <div class="info">
+            <h3>Cape Town Waterfront Suite</h3>
+            <p>Cape Town • 1 King Bed • Sea View</p>
+            <button class="btn" onclick="openDetail('capeTown')">View Details</button>
+        </div>
+    </div>
+
+    <div class="hotel-card">
+        <img src="https://picsum.photos/id/1031/800/500" alt="Johannesburg Hotel">
+        <div class="info">
+            <h3>Johannesburg Executive Room</h3>
+            <p>Johannesburg • Luxury Room • City View</p>
+            <button class="btn" onclick="openDetail('joburg')">View Details</button>
+        </div>
+    </div>
+
+    <div class="hotel-card">
+        <img src="https://picsum.photos/id/1043/800/500" alt="Safari Lodge">
+        <div class="info">
+            <h3>Kruger Safari Lodge – Luxury Suite</h3>
+            <p>Kruger Park • Private Deck • Wildlife View</p>
+            <button class="btn" onclick="openDetail('kruger')">View Details</button>
+        </div>
+    </div>
+
+    <!-- DETAIL PANEL -->
+    <div id="detailPanel">
+        <h2 id="detailTitle"></h2>
+        <p id="detailLocation"></p>
+
+        <div class="gallery">
+            <img id="img1" src="">
+            <img id="img2" src="">
+            <img id="img3" src="">
+        </div>
+
+        <p id="detailDesc" style="margin-top: 10px;"></p>
+
+        <div class="amenities" id="amenitiesBox"></div>
+
+        <h3 id="detailPrice"></h3>
+
+        <button class="btn">Book Now</button>
+        <button class="btn close-btn" onclick="closeDetail()">Close</button>
+    </div>
+
+</div>
+
+<script>
+    const data = {
+        capeTown: {
+            title: "Cape Town Waterfront Suite",
+            location: "Cape Town • Sea View • King Bed",
+            desc: "A luxury waterfront suite with Table Mountain views, balcony seating, Wi-Fi, and premium breakfast.",
+            price: "$250 / night",
+            imgs: [
+                "https://picsum.photos/id/1015/900/600",
+                "https://picsum.photos/id/1011/900/600",
+                "https://picsum.photos/id/1003/900/600"
+            ],
+            amenities: ["Free Wi-Fi", "Breakfast", "Balcony", "Air Conditioning"]
+        },
+
+        joburg: {
+            title: "Johannesburg Executive Room",
+            location: "Johannesburg • City View • Executive Floor",
+            desc: "Modern business-class room with workspace, high-speed Wi-Fi, rain shower, and minibar.",
+            price: "$190 / night",
+            imgs: [
+                "https://picsum.photos/id/1031/900/600",
+                "https://picsum.photos/id/1020/900/600",
+                "https://picsum.photos/id/1033/900/600"
+            ],
+            amenities: ["Wi-Fi", "Workspace", "Mini Bar", "Room Service"]
+				<tr><td>
+	<a href="file:///D:/New%20folder/roomdetails.html" ><input type="button" value="View Details"></a></td></tr>
+        },
+
+        kruger: {
+            title: "Kruger Safari Lodge – Luxury Suite",
+            location: "Kruger National Park • Wildlife View • Private Deck",
+            desc: "Luxury safari suite with outdoor shower, wooden deck, and direct wildlife view.",
+            price: "$420 / night",
+            imgs: [
+                "https://picsum.photos/id/1043/900/600",
+                "https://picsum.photos/id/1044/900/600",
+                "https://picsum.photos/id/1045/900/600"
+            ],
+            amenities: ["Outdoor Shower", "Private Deck", "All Meals Included", "Nature Walks"]
+        }
+    };
+
+    function openDetail(key) {
+        const room = data[key];
+        document.getElementById("detailTitle").innerText = room.title;
+        document.getElementById("detailLocation").innerText = room.location;
+        document.getElementById("detailDesc").innerText = room.desc;
+        document.getElementById("detailPrice").innerText = room.price;
+
+        document.getElementById("img1").src = room.imgs[0];
+        document.getElementById("img2").src = room.imgs[1];
+        document.getElementById("img3").src = room.imgs[2];
+
+        // Amenities
+        let a = "";
+        room.amenities.forEach(am => {
+            a += <span>${am}</span>;
+        });
+        document.getElementById("amenitiesBox").innerHTML = a;
+
+        document.getElementById("detailPanel").style.display = "block";
+        window.scrollTo(0, document.getElementById("detailPanel").offsetTop);
+    }
+
+    function closeDetail() {
+        document.getElementById("detailPanel").style.display = "none";
+    }
+</script>
+	<tr><td>
+	<a href="file:///D:/New%20folder/roomdetails.html" ><input type="button" value="View Details"></a></td></tr>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,267 @@
+	<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Tour Package Booking - Details Form</title>
+  <style>
+    :root{--accent:#0d6efd;--muted:#6c757d;--bg:#f7f9fc}
+    *{box-sizing:border-box}
+    body{font-family:Inter,Segoe UI,Roboto,Helvetica,Arial,sans-serif;margin:0;background:var(--bg);color:#111}
+    .container{max-width:920px;margin:36px auto;padding:24px;background:#fff;border-radius:12px;box-shadow:0 6px 30px rgba(15,23,42,0.06)}
+    h1{margin:0 0 8px;font-size:1.5rem}
+    p.lead{margin:0 0 18px;color:var(--muted)}
+    form{display:grid;grid-template-columns:1fr 320px;gap:20px}
+    fieldset{border:1px solid #e6eef8;padding:16px;border-radius:8px}
+    legend{font-weight:600}
+    .full{grid-column:1 / -1}
+    label{display:block;font-size:0.9rem;margin-bottom:6px}
+    input[type=text],input[type=email],input[type=tel],input[type=date],select,textarea,input[type=number]{width:100%;padding:10px;border:1px solid #dbe6f6;border-radius:8px;font-size:0.95rem}
+    textarea{min-height:96px;resize:vertical}
+    .row{display:flex;gap:12px}
+    .small{flex:1}
+    .summary{background:#fbfdff;border:1px solid #e8f0ff;padding:16px;border-radius:8px}
+    .summary h3{margin:0 0 8px}
+    .summary p{margin:6px 0;color:#223}
+    .muted{color:var(--muted);font-size:0.9rem}
+    .actions{display:flex;gap:12px;justify-content:flex-end;margin-top:12px}
+    button{background:var(--accent);color:#fff;border:0;padding:10px 14px;border-radius:8px;font-weight:600;cursor:pointer}
+    button.secondary{background:#fff;color:var(--accent);border:1px solid #cfe0ff}
+    .error{color:#b00020;font-size:0.85rem;margin-top:6px}
+    @media (max-width:880px){form{grid-template-columns:1fr}} 
+  </style>
+</head>
+<body>
+  <main class="container" role="main">
+    <h1>Book Your Tour Package</h1>
+    <p class="lead">Fill the details below to reserve your spot. We'll email a booking summary and next steps.</p>
+
+    <form id="bookingForm" novalidate>
+      <fieldset>
+        <legend>Traveler details</legend>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+          <div>
+            <label for="fullName">Full name</label>
+            <input id="fullName" name="fullName" type="text" required placeholder="e.g. Priya Sharma" />
+            <div class="error" data-for="fullName"></div>
+          </div>
+          <div>
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" required placeholder="you@example.com" />
+            <div class="error" data-for="email"></div>
+          </div>
+          <div>
+            <label for="phone">Phone</label>
+            <input id="phone" name="phone" type="tel" pattern="[0-9+\- ()]{7,20}" placeholder="+91 98765 43210" />
+            <div class="muted">Optional but helpful for urgent updates</div>
+          </div>
+          <div>
+            <label for="age">Primary traveler age</label>
+            <input id="age" name="age" type="number" min="0" max="120" />
+          </div>
+        </div>
+
+        <div style="margin-top:12px">
+          <label for="specialRequests">Special requests</label>
+          <textarea id="specialRequests" name="specialRequests" placeholder="Dietary needs, accessibility, rooming requests"></textarea>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Package & travel</legend>
+        <div style="display:grid;gap:12px">
+          <div>
+            <label for="package">Choose package</label>
+            <select id="package" name="package" required>
+              <option value="">-- Select --</option>
+              <option value="classic">Classic: 5 days / 4 nights</option>
+              <option value="adventure">Adventure: 7 days / 6 nights</option>
+              <option value="honeymoon">Honeymoon: 6 days / 5 nights</option>
+              <option value="custom">Custom itinerary</option>
+            </select>
+            <div class="error" data-for="package"></div>
+          </div>
+          <div class="row">
+            <div class="small">
+              <label for="travelFrom">Travel start</label>
+              <input id="travelFrom" name="travelFrom" type="date" required />
+              <div class="error" data-for="travelFrom"></div>
+            </div>
+            <div class="small">
+              <label for="travelTo">Travel end</label>
+              <input id="travelTo" name="travelTo" type="date" required />
+              <div class="error" data-for="travelTo"></div>
+            </div>
+          </div>
+
+          <div style="display:flex;gap:12px;align-items:center">
+            <div style="flex:1">
+              <label for="travelers">Number of travelers</label>
+              <input id="travelers" name="travelers" type="number" min="1" value="2" />
+            </div>
+            <div style="width:180px">
+              <label for="roomType">Room type</label>
+              <select id="roomType" name="roomType">
+                <option>Double</option>
+                <option>Single</option>
+                <option>Family</option>
+              </select>
+            </div>
+          </div>
+
+        </div>
+      </fieldset>
+
+      <div class="full summary" aria-live="polite">
+        <h3>Booking summary</h3>
+        <p class="muted">Your selections will appear here. Use <strong>Preview booking</strong> to generate a printable summary.</p>
+        <div id="summaryContent">
+          <p><strong>Package:</strong> —</p>
+          <p><strong>Dates:</strong> —</p>
+          <p><strong>Travelers:</strong> —</p>
+          <p><strong>Contact:</strong> —</p>
+        </div>
+        <div class="actions">
+          <button type="button" id="preview">Preview booking</button>
+          <button type="submit">Submit booking</button>
+        </div>
+      </div>
+
+    </form>
+
+    <!-- Invisible template for modal/print preview -->
+    <template id="previewTemplate">
+      <div style="padding:18px;font-family:inherit;color:#111">
+        <h2>Booking Confirmation</h2>
+        <p id="pPackage"></p>
+        <p id="pDates"></p>
+        <p id="pTravelers"></p>
+        <p id="pContact"></p>
+        <hr />
+        <p class="muted">This is a client-side preview only. We'll send an email with the official invoice and payment instructions.</p>
+      </div>
+    </template>
+
+  </main>
+
+  <script>
+    const form = document.getElementById('bookingForm');
+    const summary = document.getElementById('summaryContent');
+    const previewBtn = document.getElementById('preview');
+
+    function $(id){return document.getElementById(id)}
+
+    function showErrors(fieldName, message){
+      const el = document.querySelector(.error[data-for="${fieldName}"]);
+      if(el) el.textContent = message || '';
+    }
+
+    function validate(){
+      let ok = true;
+      // required fields
+      if(!$('fullName').value.trim()){ showErrors('fullName','Full name is required'); ok=false } else showErrors('fullName','');
+      if(!$('email').value.trim()){ showErrors('email','Email is required'); ok=false } else showErrors('email','');
+      if(!$('package').value){ showErrors('package','Choose a package'); ok=false } else showErrors('package','');
+      if(!$('travelFrom').value){ showErrors('travelFrom','Start date required'); ok=false } else showErrors('travelFrom','');
+      if(!$('travelTo').value){ showErrors('travelTo','End date required'); ok=false } else showErrors('travelTo','');
+
+      // date logic
+      if($('travelFrom').value && $('travelTo').value){
+        const from = new Date($('travelFrom').value);
+        const to = new Date($('travelTo').value);
+        if(to < from){ showErrors('travelTo','End date must be after start date'); ok=false }
+      }
+
+      // email basic pattern
+      const email = $('email').value.trim();
+      if(email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){ showErrors('email','Enter a valid email'); ok=false }
+
+      return ok;
+    }
+
+    function refreshSummary(){
+      const pkg = $('package').value || '—';
+      const from = $('travelFrom').value || '—';
+      const to = $('travelTo').value || '—';
+      const travelers = $('travelers').value || '—';
+      const name = $('fullName').value || '—';
+      const email = $('email').value || '—';
+      const phone = $('phone').value || '—';
+
+      summary.innerHTML = `
+        <p><strong>Package:</strong> ${pkg}</p>
+        <p><strong>Dates:</strong> ${from} to ${to}</p>
+        <p><strong>Travelers:</strong> ${travelers} (${$('roomType').value})</p>
+        <p><strong>Contact:</strong> ${name} — ${email} — ${phone}</p>
+      `;
+    }
+
+    // live update
+    ['fullName','email','phone','package','travelFrom','travelTo','travelers','roomType'].forEach(id=>{
+      const el = $(id);
+      if(el) el.addEventListener('input', refreshSummary);
+    });
+
+    previewBtn.addEventListener('click', ()=>{
+      if(!validate()){
+        alert('Please correct errors before previewing.');
+        return;
+      }
+      const tpl = document.getElementById('previewTemplate');
+      const dialog = document.createElement('div');
+      dialog.style.position='fixed';dialog.style.inset='0';dialog.style.display='grid';dialog.style.placeItems='center';dialog.style.background='rgba(2,6,23,0.5)';
+      const card = tpl.content.cloneNode(true);
+      card.firstElementChild.style.background='#fff';card.firstElementChild.style.borderRadius='10px';card.firstElementChild.style.maxWidth='720px';card.firstElementChild.style.boxShadow='0 10px 40px rgba(2,6,23,0.3)';
+      card.querySelector('#pPackage').textContent = 'Package: '+($('package').selectedOptions[0]?.text || $('package').value);
+      card.querySelector('#pDates').textContent = 'Dates: '+$('travelFrom').value+' → '+$('travelTo').value;
+      card.querySelector('#pTravelers').textContent = 'Travelers: '+$('travelers').value+' ('+$('roomType').value+')';
+      card.querySelector('#pContact').textContent = 'Contact: '+$('fullName').value+' — '+$('email').value+' — '+$('phone').value;
+
+      const footer = document.createElement('div'); footer.style.display='flex'; footer.style.justifyContent='flex-end'; footer.style.gap='8px'; footer.style.marginTop='14px';
+      const close = document.createElement('button'); close.textContent='Close'; close.className='secondary';
+      const printBtn = document.createElement('button'); printBtn.textContent='Print/Save';
+      close.addEventListener('click', ()=>document.body.removeChild(dialog));
+      printBtn.addEventListener('click', ()=>{
+        const printWindow = window.open('','_blank','width=900,height=700');
+        printWindow.document.write('<html><head><title>Booking Preview</title></head><body>'+card.firstElementChild.outerHTML+'</body></html>');
+        printWindow.document.close();
+        printWindow.focus();
+        printWindow.print();
+      });
+      footer.appendChild(close); footer.appendChild(printBtn);
+      card.firstElementChild.appendChild(footer);
+      dialog.appendChild(card);
+      document.body.appendChild(dialog);
+    });
+
+    form.addEventListener('submit', (e)=>{
+      e.preventDefault();
+      if(!validate()){
+        alert('Please fix errors before submitting.');
+        return;
+      }
+      // Collect data
+      const data = {
+        fullName: $('fullName').value.trim(),
+        email: $('email').value.trim(),
+        phone: $('phone').value.trim(),
+        package: $('package').value,
+        travelFrom: $('travelFrom').value,
+        travelTo: $('travelTo').value,
+        travelers: $('travelers').value,
+        roomType: $('roomType').value,
+        specialRequests: $('specialRequests').value.trim()
+      };
+
+      // NOTE: This template does not send data to a server. Replace this section with an AJAX call to submit to your backend.
+      console.log('Booking submitted:', data);
+      alert('Thanks! Your booking request has been captured (client-side). Implement a server endpoint to process payment and confirm the reservation.');
+      // optionally reset or redirect
+    });
+
+    // initial summary
+    refreshSummary();
+  </script>
+  <a href="file:///D:/New%20folder/end.html" ><input type="button" value="submit"></a>
+</body>
+</html>
